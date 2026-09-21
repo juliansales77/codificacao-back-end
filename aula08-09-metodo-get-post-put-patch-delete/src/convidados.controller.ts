@@ -21,7 +21,7 @@ export class ConvidadosController {
      }
 
 
-    @Patch()
+    @Patch(':id')
     atualizarIdade(@Param('id') id: number, @Body('idade') idade: number){
         console.log(`[ADMINISTRADOR]: Atualizando a idade do ID ${id}`);
         return this.convidadosService.atualizarIdade(+id, idade);
