@@ -4,6 +4,197 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Node.JS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 
+Este módulo aborda o aprofundamento prático na construção de **Route Handlers** no framework **NestJS**, integrando operações CRUD completas com o **`ConvidadosService`**, envio de payloads estruturados e tratamento de respostas HTTP utilizando **GET**, **POST**, **PATCH** e **DELETE**.
+
+---
+
+## 📋 Endpoints da API
+
+| Método | Endpoint | Descrição | Status HTTP |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/status` | Retorna o status de execução da API | `200 OK` |
+| `GET` | `/convidados` | Lista todos os convidados cadastrados | `200 OK` |
+| `POST` | `/convidados` | Cadastra um novo convidado | `201 Created` |
+| `PATCH` | `/convidados/:id` | Atualiza a idade de um convidado pelo ID | `200 OK` |
+| `DELETE` | `/convidados/:id` | Remove o convidado especificado pelo ID | `204 No Content` |
+
+---
+
+## 🛠️ Detalhamento das Rotas e Respostas Reais (Insomnia)
+
+### 🔹 1. Rota de Status (`GET /status`)
+- **Descrição:** Endpoint de diagnóstico para validar se a aplicação está ativa.
+- **Resposta:**
+  ```text
+  Status: Ativo!
+  ```
+
+---
+
+### 🔹 2. Listar Convidados (`GET /convidados`)
+- **Descrição:** Retorna a lista completa de convidados registados em memória.
+- **Resposta HTTP 200 OK:**
+  ```json
+  [
+    {
+      "id": 1,
+      "nome": "Alice",
+      "idade": 23
+    },
+    {
+      "id": 2,
+      "nome": "Enzo",
+      "idade": 30
+    },
+    {
+      "id": 3,
+      "nome": "Jamily",
+      "idade": 20
+    },
+    {
+      "id": 4,
+      "nome": "Alessandra",
+      "idade": 18
+    }
+  ]
+  ```
+
+---
+
+### 🔹 3. Adicionar Convidado (`POST /convidados`)
+- **Descrição:** Processa o registo de um novo convidado recebido via body.
+- **Corpo da Requisição (Payload):**
+  ```json
+  {
+    "nome": "Julian",
+    "idade": 23
+  }
+  ```
+- **Resposta HTTP 201 Created:**
+  ```json
+  {
+    "mansagen": "Convidado Julian adicionado com sucesso",
+    "dados": {
+      "nome": "Julian",
+      "idade": 23
+    }
+  }
+  ```
+
+---
+
+### 🔹 4. Atualizar Idade (`PATCH /convidados/:id`)
+- **Descrição:** Atualiza a idade do convidado especificado no parâmetro de rota.
+- **Exemplo de Rota:** `PATCH http://localhost:3000/convidados/2`
+- **Corpo da Requisição (Payload):**
+  ```json
+  {
+    "idade": 30
+  }
+  ```
+- **Resposta HTTP 200 OK:**
+  ```json
+  {
+    "id": 2,
+    "nome": "Enzo",
+    "idade": 30
+  }
+  ```
+
+---
+
+### 🔹 5. Remover Convidado (`DELETE /convidados/:id`)
+- **Descrição:** Remove o convidado associado ao ID indicado na URL.
+- **Exemplo de Rota:** `DELETE http://localhost:3000/convidados/5`
+- **Resposta HTTP 204 No Content:** *(Sem corpo de resposta)*
+
+---
+
+## 🖥️ Logs de Execução do Servidor (Terminal)
+
+```text
+[Nest] 9760 - LOG [NestFactory] Starting Nest application...
+[Nest] 9760 - LOG [InstanceLoader] AppModule dependencies initialized +4ms
+[Nest] 9760 - LOG [RoutesResolver] AppController {/status}: +4ms
+[Nest] 9760 - LOG [RouterExplorer] Mapped {/status, GET} route +2ms
+[Nest] 9760 - LOG [RoutesResolver] ConvidadosController {/convidados}: +0ms
+[Nest] 9760 - LOG [RouterExplorer] Mapped {/convidados, GET} route +0ms
+[Nest] 9760 - LOG [RouterExplorer] Mapped {/convidados, POST} route +1ms
+[Nest] 9760 - LOG [RouterExplorer] Mapped {/convidados/:id, PATCH} route +0ms
+[Nest] 9760 - LOG [RouterExplorer] Mapped {/convidados/:id, DELETE} route +0ms
+[Nest] 9760 - LOG [NestApplication] Nest application successfully started +1ms
+[OPERADOR]: Novo convidado recebido: [object Object]
+[ADMINISTRADOR]: Atualizando a idade do ID 2
+[ADMINISTRADOR]: Removendo Convidado ID: 5
+```
+
+---
+
+## 📂 Estrutura do Módulo
+
+```text
+aula08-09-metodo-get-post-put-patch-delete/
+├── src/
+│   ├── dto/
+│   │   └── criar-convidado.dto.ts   # Data Transfer Object (validação)
+│   ├── app.controller.ts            # Controller da rota de status
+│   ├── app.module.ts                # Módulo principal da aplicação
+│   ├── app.service.ts               # Serviço de status
+│   ├── convidados.controller.ts     # Handlers de rotas HTTP (GET, POST, PATCH, DELETE)
+│   ├── convidados.service.ts        # Armazenamento e regras de negócio
+│   └── main.ts                      # Ficheiro de inicialização (bootstrap)
+├── nest-cli.json
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+---
+
+## ⚡ Como Executar Localmente
+
+1. **Aceda à pasta do módulo:**
+   ```bash
+   cd aula08-09-metodo-get-post-put-patch-delete
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor em modo de desenvolvimento:**
+   ```bash
+   npm run start:dev
+   ```
+
+4. **Testar endpoints no Insomnia:** `http://localhost:3000/convidados`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 🚀 Aula 08-09: Route Handlers (Métodos GET, POST, PATCH e DELETE)
+
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Node.JS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+
 Este módulo aborda o aprofundamento prático na construção e manipulação de **Route Handlers** no framework **NestJS**, integrando operações de CRUD completas com **`ConvidadosService`**, tratamento de exceções com `NotFoundException` e mapeamento dos verbos HTTP **GET**, **POST**, **PATCH** e **DELETE**.
 
 ---
@@ -143,3 +334,5 @@ aula08-09-metodo-get-post-put-patch-delete/
    ```
 
 4. **Acesse a API em:** `http://localhost:3000/convidados`
+
+
