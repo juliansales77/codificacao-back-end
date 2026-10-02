@@ -7,7 +7,7 @@ export class AppController {
   @Get()
   getPublic(){
     return {
-      massage:'Rota Publica acessada com sucesso',
+      mansagem:'Rota Publica acessada com sucesso',
       data: new Date(),
     }
   }
@@ -18,5 +18,11 @@ export class AppController {
       data: new Date(),
     }
   }
-
+  @Get('secret')
+  getSecret(){
+    return {
+      mansagem:'Bem-vindo a Rota Secreta',
+      data: new Date(),
+    }
+  }
 }

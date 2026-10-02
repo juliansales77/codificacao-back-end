@@ -4,15 +4,30 @@ import type { Request,  Response, NextFunction } from 'express';
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log(`[LOG] Método : ${req.method} | Rota: ${req.path}`);
+    const Rota = req.originalUrl || req.url;
+    console.log(`[LOG] Método: ${req.method} | Rota: ${Rota}  `);
 
-    if(req.path.startsWith('')){
-      const role = req.headers['x-user-role'];
-      if(role !== 'supervisor'){
+    if(Rota.startsWith('admin')){
+
+      const role = req.headers['/api-key-admin'];
+
+      if(role !== 'administrador'){
         return res.status(403).json({
           statusCode: 403,
           massage: 'Acesso Negado: Privilégipo Supervisor Necessario',
-          log: new Date,
+          
+        });
+      }
+    }
+    if(Rota.startsWith('secret')){
+
+      const role = req.headers['/api-key-secret'];
+
+      if(role !== 'operador'){
+        return res.status(403).json({
+          statusCode: 403,
+          massage: 'Acesso Negado: Privilégipo Usuario Autenticado Necessario',
+          
         });
       }
     }

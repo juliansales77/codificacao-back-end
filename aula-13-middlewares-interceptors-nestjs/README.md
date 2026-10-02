@@ -63,3 +63,52 @@ Controle de Acesso AdministrativoAo acessar a rota /admin, o LoggerMiddleware va
 🧩 Middleware vs. InterceptorRecursoMomento de ExecuçãoCasos de Uso PrincipaisMiddlewareAntes do Controller / HandlersLogs globais, autenticação básica, manipulação direta de req/res.InterceptorAntes e Depois da execução do ControllerTransformação de respostas, medição de tempo de execução, caching.🚀 Como Executar e TestarInstalar as dependências:Bashnpm install
 Executar em modo de desenvolvimento:Bashnpm run start:dev
 Testar os Endpoints:Rota Pública: GET http://localhost:3000/Rota Protegida (Sem permissão): GET http://localhost:3000/adminRota Protegida (Com permissão): GET http://localhost:3000/admin com o Header x-user-role: supervisor
+
+
+
+Projeto desenvolvido durante a aula sobre **Middlewares** e **Interceptors** no NestJS, demonstrando como interceptar requisições HTTP, registrar logs no console e aplicar múltiplas regras de autorização em diferentes rotas protegidas.
+
+---
+
+## 📚 Conteúdo da Aula
+
+Nesta aula foram trabalhados os seguintes conceitos:
+
+- **Middleware no NestJS:** Implementação da interface `NestMiddleware`.
+- **Express Objects:** Manipulação de `Request`, `Response` e `NextFunction`.
+- **Inspeção de Requisições:** Leitura de métodos e rotas utilizando `req.originalUrl || req.url` e `req.method`[cite: 14].
+- **Controle de Acesso Múltiplo:** Validação de diferentes regras dependendo do prefixo da rota (`admin` ou `secret`)[cite: 14].
+- **Leitura de Cabeçalhos Customizados:** Uso de headers específicos como `'/api-key-admin'` e `'/api-key-secret'`[cite: 14].
+
+---
+
+## 🔐 Regras de Autorização e Rotas
+
+O `LoggerMiddleware` intercepta a requisição, gera um log no terminal indicando o método e a rota[cite: 14], e aplica as seguintes regras de acesso:
+
+### 1. Rota Pública
+- **Endpoint:** `GET /`
+- **Regra:** Não exige cabeçalhos de autenticação.
+- **Retorno de Sucesso:** `"Rota Publica acessada com sucesso"` e a data atual[cite: 13].
+
+### 2. Rota Administrativa
+- **Endpoint:** `GET /admin`
+- **Validação:** Verifica se a rota inicia com `admin`[cite: 14].
+- **Cabeçalho Exigido:** `'/api-key-admin'` com o valor `'administrador'`[cite: 14].
+- **Retorno de Erro (403):** Se o valor for incorreto ou ausente, retorna `"Acesso Negado: Privilégipo Supervisor Necessario"`[cite: 14].
+- **Retorno de Sucesso:** `"Bem-vindo ao Painel administrativo"` e a data atual[cite: 13].
+
+### 3. Rota Secreta
+- **Endpoint:** `GET /secret`
+- **Validação:** Verifica se a rota inicia com `secret`[cite: 14].
+- **Cabeçalho Exigido:** `'/api-key-secret'` com o valor `'operador'`[cite: 14].
+- **Retorno de Erro (403):** Se o valor for incorreto ou ausente, retorna `"Acesso Negado: Privilégipo Usuario Autenticado Necessario"`[cite: 14].
+- **Retorno de Sucesso:** `"Bem-vindo a Rota Secreta"` e a data atual[cite: 13].
+
+---
+
+## 🚀 Como Executar e Testar
+
+1. **Instalar as dependências:**
+   ```bash
+   npm install
