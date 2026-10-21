@@ -1,0 +1,46 @@
+{
+    "entidade": "Professor",
+    "identificacao": {
+        "idProfessor": "P-045",
+        "nome": "Roberto Carlos",
+        "disciplina": "Matemática"
+    },
+    "acoes": {
+        "ensina": {
+            "funcao": "Explicar matéria, tirar dúvidas, mostrar como fazer",
+            "registroDeAulas": [
+                {
+                    "data": "2026-10-20",
+                    "turma": "1º Ano A",
+                    "conteudoLecionado": "Equações de 2º Grau e resolução de dúvidas"
+                }
+            ]
+        },
+        "organiza": {
+            "funcao": "Passar atividade, prova, trabalho e gerenciar presença",
+            "atividadesPlanejadas": [
+                {
+                    "tipo": "Trabalho",
+                    "titulo": "Lista de Exercícios Práticos",
+                    "dataEntrega": "2026-10-25"
+                }
+            ],
+            "diarioDeClasse": {
+                "data": "2026-10-20",
+                "turma": "1º Ano A",
+                "alunosAusentes": ["0012", "0034"]
+            }
+        },
+        "avalia": {
+            "funcao": "Corrigir provas e dar notas",
+            "notasAtribuidas": [
+                {
+                    "idAtividade": "A-102",
+                    "matriculaAluno": "0001",
+                    "nota": 8.5,
+                    "comentarioCorrecao": "Ótimo raciocínio lógico."
+                }
+            ]
+        }
+    }
+}

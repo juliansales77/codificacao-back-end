@@ -1,0 +1,13 @@
+{
+    "titulo": "Rede Social",
+    "autor": "João Pedro",
+    "data": "2026-10-20",
+    "comentarios":[
+        {
+            "autor": "Maria Silva",
+            "texto": "Ótimo post!",
+            "data": "2026-10-20",
+            "curtidas": 10
+        }
+    ]
+}
