@@ -8,15 +8,21 @@ export class Aluno {
   @Prop({
     required: true
 })
+
   nome: string;
   @Prop({
     required: true
   })
   idade: number;
+
+
   @Prop({
-    required: true
+    required: true,
+    unique:true
   })
   matricula: string;
+
+
   @Prop([
     String
   ])
