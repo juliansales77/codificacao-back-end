@@ -1,4 +1,3 @@
-
 import {Controller, Get, Post,Body,Patch, Param, Delete, Query, DefaultValuePipe, ParseArrayPipe, ParseIntPipe} from '@nestjs/common';
 import { AlunosService } from '../alunos.service.js';
 import { CreateAlunoDto } from './dto/create-alunos.dto.js';
@@ -10,7 +9,7 @@ import {ApiTags, ApiOperation,ApiResponse, ApiQuery} from '@nestjs/swagger';
 export class AlunosController {
   constructor( private readonly alunoService: AlunosService) {}
 
-  
+  //=====================================================
   @Post()
   @ApiOperation({
     summary: 'Cria a matrícula do aluno',
@@ -35,7 +34,7 @@ export class AlunosController {
   create(@Body() createAlunoDto: CreateAlunoDto) {
     return this.alunoService.create(createAlunoDto);
   }
-
+//====================================
  
   @Get()
   @ApiOperation({
@@ -81,10 +80,26 @@ export class AlunosController {
     type: Number,
     description: 'Itens por pagina(padrão: 10)'
   })
+  @ApiQuery({
+    name: 'nome',
+    required: false,
+    type: String,
+    description: 'filtra alunos pelo nome',
+  })
+  @ApiQuery({
+    name: 'curso',
+    required: false,
+    type: String,
+    description: 'filtra alunos pelo curso',
+  })
 
-  findAllPage(@Query('page', new DefaultValuePipe(1), ParseArrayPipe) page: number, 
-@Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number){
-    return this.alunoService.findAllPage(page, limit,);
+  findAllPage(
+    @Query('page', new DefaultValuePipe(1), ParseArrayPipe) page: number, 
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('nome') nome?: string,
+    @Query('curso') curso?:string,
+  ){
+  return this.alunoService.findAllPage(page, limit, nome, curso);
 }
   @Get(':id')
   @ApiOperation({
