@@ -35,72 +35,72 @@ export class AlunosController {
     return this.alunoService.create(createAlunoDto);
   }
 //====================================
- 
-  @Get()
-  @ApiOperation({
-    summary: 'Retorna todos os alunos cadastrados',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Lista de alunos retornada com sucesso.',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Nenhum aluno encontrado.',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'Erro interno do servidor.',
-  })
- 
-  //findAll() {
-    //return this.alunoService.findAll();
-  //}
-  @Get()
-  @ApiOperation({
-    summary: 'retorno um aluno espefico pelo ID'
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'nenhum aluno encontrado',
-  })
-  @ApiResponse({
-    status: 500,
-    description: 'erro internno do servidor ou serviço indisponivel'
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    type: Number,
-    description: 'numero da página(padrão: 1)'
-  })
-  @ApiQuery({
-    name: 'limit',
-    required:false,
-    type: Number,
-    description: 'Itens por pagina(padrão: 10)'
-  })
-  @ApiQuery({
-    name: 'nome',
-    required: false,
-    type: String,
-    description: 'filtra alunos pelo nome',
-  })
-  @ApiQuery({
-    name: 'curso',
-    required: false,
-    type: String,
-    description: 'filtra alunos pelo curso',
-  })
-
-  findAllPage(
-    @Query('page', new DefaultValuePipe(1), ParseArrayPipe) page: number, 
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-    @Query('nome') nome?: string,
-    @Query('curso') curso?:string,
-  ){
-  return this.alunoService.findAllPage(page, limit, nome, curso);
+ @Get()
+@ApiOperation({
+  summary: 'Retorna alunos com paginação, filtros opcionais e ordenação',
+})
+@ApiResponse({
+  status: 200,
+  description: 'Lista de alunos retornada com sucesso.',
+})
+@ApiResponse({
+  status: 500,
+  description: 'Erro interno do servidor.',
+})
+@ApiQuery({
+  name: 'page',
+  required: false,
+  type: Number,
+  description: 'Número da página (padrão: 1)',
+})
+@ApiQuery({
+  name: 'limit',
+  required: false,
+  type: Number,
+  description: 'Itens por página (padrão: 10)',
+})
+@ApiQuery({
+  name: 'nome',
+  required: false,
+  type: String,
+  description: 'Filtra alunos pelo nome',
+})
+@ApiQuery({
+  name: 'curso',
+  required: false,
+  type: String,
+  description: 'Filtra alunos pelo curso',
+})
+@ApiQuery({
+  name: 'orderBy',
+  required: false,
+  type: String,
+  description: 'Campo utilizado para ordenar os resultados',
+})
+@ApiQuery({
+  name: 'orderDirection',
+  required: false,
+  enum: ['asc', 'desc'],
+  description: 'Direção da ordenação',
+})
+findAllPageFilter(
+  @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+  @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  @Query('nome') nome?: string,
+  @Query('curso') curso?: string,
+  @Query('orderBy') orderBy?: string,
+  @Query('orderDirection') orderDirection?: 'asc' | 'desc',
+) {
+  return this.alunoService.findAllPageFilter(
+    page,
+    limit,
+    nome,
+    curso,
+    orderBy,
+    orderDirection,
+  );
 }
+ 
   @Get(':id')
   @ApiOperation({
     summary: 'Retorna um aluno específico',
